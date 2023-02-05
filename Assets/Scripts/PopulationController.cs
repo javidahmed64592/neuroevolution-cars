@@ -14,7 +14,6 @@ public class PopulationController : MonoBehaviour
     [SerializeField] private GameObject CarPrefab;
 
     [SerializeField] private int populationSize;
-    [SerializeField] private Text numAliveText;
     [SerializeField] private float mutationRate;
 
     private List<Car> population = new List<Car>();
@@ -65,7 +64,6 @@ public class PopulationController : MonoBehaviour
             num += System.Convert.ToInt32(Car.isAlive);
         }
 
-        numAliveText.text = "Num alive: " + num;
         return num;
     }
 
@@ -112,6 +110,5 @@ public class PopulationController : MonoBehaviour
 
         // Update rotation
         camTransform.rotation = Quaternion.Slerp(camTransform.rotation, Quaternion.LookRotation(target.position - camTransform.position), 1 / smoothStep);
-        numAlive();
     }
 }

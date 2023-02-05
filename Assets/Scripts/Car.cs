@@ -31,6 +31,8 @@ public class Car : MonoBehaviour
     // Genetic Algorithm
     [HideInInspector] public bool isAlive = true;
 
+    [HideInInspector] public bool atEnd = false;
+
     private void Awake()
     {
         car = GetComponent<Transform>();
@@ -50,7 +52,7 @@ public class Car : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isAlive)
+        if (isAlive && !atEnd)
         {
             checkSurroundings();
             Move();
@@ -101,6 +103,7 @@ public class Car : MonoBehaviour
         isAlive = alive;
         skin.enabled = alive;
         speedPercent = 0f;
+        atEnd = !alive;
     }
 
     public void ResetPosition(Vector3 startPosition)
@@ -117,6 +120,11 @@ public class Car : MonoBehaviour
     {
         // Collision with death object? You die!
         if (other.gameObject.CompareTag("DEATH POW")) SetAlive(false);
+        if (other.gameObject.CompareTag("Stop"))
+        {
+            atEnd = true;
+            speedPercent = 0f;
+        }
     }
 
     public float fitness()

@@ -5,9 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     // Population variables
-    [SerializeField] private Transform populationParent;
-
-    private PopulationController population;
+    [SerializeField] private PopulationController population;
 
     // Laser
     [SerializeField] private Transform laser;
@@ -18,17 +16,16 @@ public class GameController : MonoBehaviour
     // Genetic Algorithm
     private int count = 0;
 
-    private int maxSteps = 100;
     private int generation = 1;
 
     // UI
     [SerializeField] private Text generationText;
 
     [SerializeField] private Text countText;
+    [SerializeField] private Text numAliveText;
 
     private void Awake()
     {
-        population = populationParent.GetComponent<PopulationController>();
         generationText.text = "Generation: " + generation;
 
         laserStartPos = laser.position;
@@ -41,6 +38,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        numAliveText.text = "No Alive: " + population.numAlive();
         countText.text = "Count: " + count;
     }
 
@@ -48,10 +46,7 @@ public class GameController : MonoBehaviour
     {
         while (true)
         {
-            int numAlive = population.numAlive();
-            if (numAlive == 0 && count != 0) count = maxSteps;
-
-            if (count == maxSteps)
+            if (population.numAlive() == 0 && count != 0)
             {
                 ResetAll();
             }

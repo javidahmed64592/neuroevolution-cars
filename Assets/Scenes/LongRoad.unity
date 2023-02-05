@@ -1071,7 +1071,7 @@ GameObject:
   - component: {fileID: 68150992}
   - component: {fileID: 68150991}
   - component: {fileID: 68150990}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InvisibleWall_InnerRight
   m_TagString: DEATH POW
   m_Icon: {fileID: 0}
@@ -3289,7 +3289,7 @@ MonoBehaviour:
   CarPrefab: {fileID: 4994942985884092864, guid: 40e484a52ba08654fb6f46504f93a94d, type: 3}
   populationSize: 200
   numAliveText: {fileID: 1902570890}
-  mutationRate: 0.01
+  mutationRate: 0.02
 --- !u!4 &298911099
 Transform:
   m_ObjectHideFlags: 0
@@ -25999,7 +25999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8446028551668675704, guid: 0020b6497214fbf4a88cd854efce88b8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8446028551668675704, guid: 0020b6497214fbf4a88cd854efce88b8, type: 3}
       propertyPath: m_TagString
@@ -30449,7 +30449,7 @@ GameObject:
   - component: {fileID: 1327086469}
   - component: {fileID: 1327086468}
   - component: {fileID: 1327086467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InvisibleWall_OuterLeft
   m_TagString: DEATH POW
   m_Icon: {fileID: 0}
@@ -30479,7 +30479,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327086465}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -31043,7 +31043,7 @@ GameObject:
   - component: {fileID: 1378271468}
   - component: {fileID: 1378271467}
   - component: {fileID: 1378271466}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InvisibleWall_OuterRight
   m_TagString: DEATH POW
   m_Icon: {fileID: 0}
@@ -31073,7 +31073,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378271464}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -35448,6 +35448,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.446256, y: 2.1534896, z: 4.4431233}
   m_Center: {x: -0.1463908, y: 0.00018314393, z: 1.1441799}
+--- !u!1 &1827650728 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8446028551668675704, guid: 0020b6497214fbf4a88cd854efce88b8, type: 3}
+  m_PrefabInstance: {fileID: 1113458775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1827650729
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827650728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.700002, y: 17.399998, z: 1.7850511}
+  m_Center: {x: -1.3300865, y: 0.0000023407456, z: 0.79739267}
 --- !u!1 &1828491392 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6512773731858164416, guid: 0020b6497214fbf4a88cd854efce88b8, type: 3}
@@ -38308,7 +38326,7 @@ GameObject:
   - component: {fileID: 2066358859}
   - component: {fileID: 2066358858}
   - component: {fileID: 2066358857}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InvisibleWall_InnerLeft
   m_TagString: DEATH POW
   m_Icon: {fileID: 0}
@@ -39145,5 +39163,5 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3266218392181479890, guid: 6c07d32838b7f0246b471bd0e238ddc8, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 6c07d32838b7f0246b471bd0e238ddc8, type: 3}
