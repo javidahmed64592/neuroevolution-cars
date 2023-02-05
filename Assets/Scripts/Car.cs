@@ -24,9 +24,7 @@ public class Car : MonoBehaviour
     // Neural Network
     [HideInInspector] public NeuralNetwork nn;
 
-    [SerializeField] private int inputNodes;
-    [SerializeField] private int hiddenNodes;
-    [SerializeField] private int outputNodes;
+    private int inputNodes;
     [HideInInspector] private float[] input;
     [SerializeField] private float sightDistance = 5f;
 
@@ -44,9 +42,7 @@ public class Car : MonoBehaviour
 
         // Configuring neural network
         nn = GetComponent<NeuralNetwork>();
-        nn.inputNodes = inputNodes;
-        nn.hiddenNodes = hiddenNodes;
-        nn.outputNodes = hiddenNodes;
+        inputNodes = nn.layerNodes[0];
         input = new float[inputNodes];
 
         obstaclesLayer = LayerMask.GetMask("Obstacle");

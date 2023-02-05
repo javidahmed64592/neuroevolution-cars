@@ -265,4 +265,9 @@ public class Matrix
 
         return newMatrix;
     }
+
+    public static string getShape(Matrix matrix)
+    {
+        return "Rows: " + matrix.matrix.GetLength(0) + " Cols: " + matrix.matrix.GetLength(1);
+    }
 }

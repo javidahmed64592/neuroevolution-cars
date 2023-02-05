@@ -140,9 +140,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 59d5168c3160d2948b39bbd2db2fb27d, type: 3}
   - {fileID: 2800000, guid: ecb393124dfb425418c9fea6e73a2512, type: 3}
   nn: {fileID: 0}
-  inputNodes: 16
-  hiddenNodes: 6
-  outputNodes: 2
   sightDistance: 10
   isAlive: 1
 --- !u!114 &1606597748
@@ -157,6 +154,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc678197fc97a849b82212fcbd1f73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputNodes: 6
-  hiddenNodes: 32
-  outputNodes: 2
+  layerNodes: 100000000a0000000600000002000000
