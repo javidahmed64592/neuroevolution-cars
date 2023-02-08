@@ -3288,7 +3288,6 @@ MonoBehaviour:
   offset: {x: -18, y: 14, z: -14}
   CarPrefab: {fileID: 4994942985884092864, guid: 40e484a52ba08654fb6f46504f93a94d, type: 3}
   populationSize: 200
-  numAliveText: {fileID: 1902570890}
   mutationRate: 0.02
 --- !u!4 &298911099
 Transform:
@@ -35227,11 +35226,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07de647fc1175d246ae4fcb5123d33ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationParent: {fileID: 298911099}
+  population: {fileID: 298911098}
   laser: {fileID: 615993744}
   laserSpeed: 0.14
   generationText: {fileID: 785997210}
   countText: {fileID: 1884370421}
+  numAliveText: {fileID: 1902570890}
 --- !u!1 &1804503319 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5332186495283517314, guid: 0020b6497214fbf4a88cd854efce88b8, type: 3}
