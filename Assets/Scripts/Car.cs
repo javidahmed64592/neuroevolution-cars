@@ -34,7 +34,7 @@ public class Car : MonoBehaviour
     private Transform nearestTarget;
 
     private float distanceToTarget;
-    [SerializeField] private float targetDistanceNormalise;
+    [SerializeField] private float targetDistanceThreshold;
     private float alignmentAngle;
 
     // Genetic Algorithm
@@ -122,7 +122,8 @@ public class Car : MonoBehaviour
         distanceToTarget = Vector3.Distance(car.position, nearestTarget.position);
         alignmentAngle = Mathf.Abs(Mathf.Cos(Vector3.Angle(car.forward, nearestTarget.forward) * Mathf.PI / 180));
 
-        input[inputNodes - 3] = distanceToTarget / targetDistanceNormalise;
+        input[inputNodes - 3] = distanceToTarget < targetDistanceThreshold ?
+           1 - (distanceToTarget / targetDistanceThreshold) : 0f;
         input[inputNodes - 2] = Mathf.Cos(Vector3.Angle(car.forward, nearestTarget.position) * Mathf.PI / 180);
         input[inputNodes - 1] = alignmentAngle;
     }
@@ -169,13 +170,14 @@ public class Car : MonoBehaviour
         if (other.gameObject.CompareTag("DEATH POW"))
         {
             skin.enabled = false;
+            crashed = true;
             SetAlive(false);
         }
     }
 
     public float fitness()
     {
-        float score = (baseFitness + ((1 - baseFitness) * alignmentAngle)) / distanceToTarget;
+        float score = targetDistanceThreshold * (baseFitness + ((1 - baseFitness) * alignmentAngle)) / distanceToTarget;
         return Mathf.Pow(score * (crashed ? crashedPenalty : 1f), 2);
     }
 }
