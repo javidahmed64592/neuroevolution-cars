@@ -40,6 +40,11 @@ public class Car : MonoBehaviour
     // Genetic Algorithm
     [HideInInspector] public bool isAlive = true;
 
+    [SerializeField] public float baseFitness = 0.5f;
+
+    private bool crashed = false;
+    [SerializeField] private float crashedPenalty = 0.1f;
+
     private void Awake()
     {
         car = GetComponent<Transform>();
@@ -126,7 +131,7 @@ public class Car : MonoBehaviour
     {
         float[] output = nn.feedforward(input);
 
-        //if (output[2] > output[3]) SetAlive(false);
+        if (output[2] > output[3]) SetAlive(false);
 
         float newSpeedPercent = output[0];
         float turning = output[1];
@@ -150,6 +155,8 @@ public class Car : MonoBehaviour
     {
         // Set attributes
         SetAlive(true);
+        crashed = false;
+        skin.enabled = true;
 
         // Move to spawn position
         car.position = startPosition;
@@ -159,11 +166,16 @@ public class Car : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Collision with death object? You die!
-        if (other.gameObject.CompareTag("DEATH POW")) SetAlive(false);
+        if (other.gameObject.CompareTag("DEATH POW"))
+        {
+            skin.enabled = false;
+            SetAlive(false);
+        }
     }
 
     public float fitness()
     {
-        return Mathf.Pow(alignmentAngle / distanceToTarget, 2);
+        float score = (baseFitness + ((1 - baseFitness) * alignmentAngle)) / distanceToTarget;
+        return Mathf.Pow(score * (crashed ? crashedPenalty : 1f), 2);
     }
 }
