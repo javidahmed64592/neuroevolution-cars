@@ -116,8 +116,11 @@ public class PopulationController : MonoBehaviour
 
         foreach (Car car in population)
         {
-            totalX += car.transform.position.x;
-            totalZ += car.transform.position.z;
+            if (car.isAlive)
+            {
+                totalX += car.transform.position.x;
+                totalZ += car.transform.position.z;
+            }
         }
 
         float centreX = totalX / population.Count;
