@@ -140,10 +140,11 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 59d5168c3160d2948b39bbd2db2fb27d, type: 3}
   - {fileID: 2800000, guid: ecb393124dfb425418c9fea6e73a2512, type: 3}
   nn: {fileID: 0}
-  input: []
   sightDistance: 10
-  targetDistanceNormalise: 175
+  targetDistanceThreshold: 50
   isAlive: 1
+  baseFitness: 0.5
+  crashedPenalty: 0.1
 --- !u!114 &1606597748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,4 +157,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc678197fc97a849b82212fcbd1f73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerNodes: 130000000900000004000000
+  layerNodes: 1000000004000000

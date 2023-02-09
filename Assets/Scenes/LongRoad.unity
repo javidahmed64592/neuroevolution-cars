@@ -35227,8 +35227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   population: {fileID: 298911098}
-  laser: {fileID: 615993744}
-  laserSpeed: 0.14
+  maxCount: 100
   generationText: {fileID: 785997210}
   countText: {fileID: 1884370421}
   numAliveText: {fileID: 1902570890}
