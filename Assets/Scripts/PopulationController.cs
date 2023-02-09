@@ -101,14 +101,28 @@ public class PopulationController : MonoBehaviour
 
     private void LateUpdate()
     {
-        // Target
-        Transform target = population[bestAgent()].transform;
-
         // Update position
-        Vector3 targetPosition = target.position + offset;
+        Vector3 targetPosition = medianPointOfCars() + offset;
         camTransform.position = Vector3.Lerp(camTransform.position, targetPosition, 1 / smoothStep);
 
         // Update rotation
-        camTransform.rotation = Quaternion.Slerp(camTransform.rotation, Quaternion.LookRotation(target.position - camTransform.position), 1 / smoothStep);
+        camTransform.rotation = Quaternion.Slerp(camTransform.rotation, Quaternion.LookRotation(medianPointOfCars() - camTransform.position), 1 / smoothStep);
+    }
+
+    private Vector3 medianPointOfCars()
+    {
+        float totalX = 0f;
+        float totalZ = 0f;
+
+        foreach (Car car in population)
+        {
+            totalX += car.transform.position.x;
+            totalZ += car.transform.position.z;
+        }
+
+        float centreX = totalX / population.Count;
+        float centreZ = totalZ / population.Count;
+
+        return new Vector3(centreX, 0f, centreZ);
     }
 }

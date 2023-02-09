@@ -6,7 +6,7 @@ TagManager:
   tags:
   - DEATH POW
   - Car
-  - Stop
+  - Target
   layers:
   - Default
   - TransparentFX

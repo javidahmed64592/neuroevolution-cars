@@ -7,14 +7,10 @@ public class GameController : MonoBehaviour
     // Population variables
     [SerializeField] private PopulationController population;
 
-    // Laser
-    [SerializeField] private Transform laser;
-
-    [SerializeField] private float laserSpeed = 0.1f;
-    private Vector3 laserStartPos;
-
     // Genetic Algorithm
     private int count = 0;
+
+    [SerializeField] private int maxCount = 100;
 
     private int generation = 1;
 
@@ -27,8 +23,6 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         generationText.text = "Generation: " + generation;
-
-        laserStartPos = laser.position;
     }
 
     private void Start()
@@ -46,7 +40,7 @@ public class GameController : MonoBehaviour
     {
         while (true)
         {
-            if (population.numAlive() == 0 && count != 0)
+            if (population.numAlive() == 0 && count != 0 || count == maxCount)
             {
                 ResetAll();
             }
@@ -58,17 +52,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        laser.position = Vector3.Lerp(laser.position, laser.position + new Vector3(0, 0, laserSpeed * Mathf.Pow(count, 0.5f)), 0.15f);
-    }
-
     private void ResetAll()
     {
         population.Evaluate();
         count = 0;
         generation++;
         generationText.text = "Generation: " + generation;
-        laser.position = laserStartPos;
     }
 }

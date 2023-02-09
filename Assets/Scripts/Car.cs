@@ -25,13 +25,20 @@ public class Car : MonoBehaviour
     [HideInInspector] public NeuralNetwork nn;
 
     private int inputNodes;
-    [HideInInspector] private float[] input;
+    private float[] input;
     [SerializeField] private float sightDistance = 5f;
+
+    // Distance and angle to nearest target
+    private GameObject[] targets;
+
+    private Transform nearestTarget;
+
+    private float distanceToTarget;
+    [SerializeField] private float targetDistanceNormalise;
+    private float alignmentAngle;
 
     // Genetic Algorithm
     [HideInInspector] public bool isAlive = true;
-
-    [HideInInspector] public bool atEnd = false;
 
     private void Awake()
     {
@@ -46,25 +53,27 @@ public class Car : MonoBehaviour
         nn = GetComponent<NeuralNetwork>();
         inputNodes = nn.layerNodes[0];
         input = new float[inputNodes];
+        targets = GameObject.FindGameObjectsWithTag("Target");
 
         obstaclesLayer = LayerMask.GetMask("Obstacle");
     }
 
     private void FixedUpdate()
     {
-        if (isAlive && !atEnd)
+        if (isAlive)
         {
             checkSurroundings();
+            findTarget();
             Move();
         }
     }
 
     private void checkSurroundings()
     {
-        for (int i = 0; i < inputNodes; i++)
+        for (int i = 0; i < inputNodes - 3; i++)
         {
             //Color col;
-            float angle = ((i * 2 * Mathf.PI) / inputNodes) + (car.eulerAngles.y * Mathf.PI / 180);
+            float angle = ((i * 2 * Mathf.PI) / (inputNodes - 3)) + (car.eulerAngles.y * Mathf.PI / 180);
             Vector3 dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             RaycastHit hit;
@@ -83,9 +92,42 @@ public class Car : MonoBehaviour
         }
     }
 
+    public Transform NearestTarget()
+    {
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = car.position;
+        foreach (GameObject target in targets)
+        {
+            Vector3 diff = target.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = target;
+                distance = curDistance;
+            }
+        }
+        return closest.transform;
+    }
+
+    private void findTarget()
+    {
+        nearestTarget = NearestTarget();
+
+        distanceToTarget = Vector3.Distance(car.position, nearestTarget.position);
+        alignmentAngle = Mathf.Abs(Mathf.Cos(Vector3.Angle(car.forward, nearestTarget.forward) * Mathf.PI / 180));
+
+        input[inputNodes - 3] = distanceToTarget / targetDistanceNormalise;
+        input[inputNodes - 2] = Mathf.Cos(Vector3.Angle(car.forward, nearestTarget.position) * Mathf.PI / 180);
+        input[inputNodes - 1] = alignmentAngle;
+    }
+
     private void Move()
     {
         float[] output = nn.feedforward(input);
+
+        //if (output[2] > output[3]) SetAlive(false);
+
         float newSpeedPercent = output[0];
         float turning = output[1];
 
@@ -101,9 +143,7 @@ public class Car : MonoBehaviour
     private void SetAlive(bool alive)
     {
         isAlive = alive;
-        skin.enabled = alive;
         speedPercent = 0f;
-        atEnd = !alive;
     }
 
     public void ResetPosition(Vector3 startPosition)
@@ -120,15 +160,10 @@ public class Car : MonoBehaviour
     {
         // Collision with death object? You die!
         if (other.gameObject.CompareTag("DEATH POW")) SetAlive(false);
-        if (other.gameObject.CompareTag("Stop"))
-        {
-            atEnd = true;
-            speedPercent = 0f;
-        }
     }
 
     public float fitness()
     {
-        return car.position.z > 0 ? Mathf.Pow(car.position.z, 2) : 0f;
+        return Mathf.Pow(alignmentAngle / distanceToTarget, 2);
     }
 }
