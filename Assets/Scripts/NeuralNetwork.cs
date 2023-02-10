@@ -54,7 +54,7 @@ public class NeuralNetwork : MonoBehaviour
     }
 
     // Activation functions
-    private float sigmoid(float x)
+    public float sigmoid(float x)
     {
         return 1 / (1 + Mathf.Exp(-x));
     }

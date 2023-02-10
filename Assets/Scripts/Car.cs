@@ -25,8 +25,11 @@ public class Car : MonoBehaviour
     [HideInInspector] public NeuralNetwork nn;
 
     private int inputNodes;
+    private int extraInputNodes = 0;
     private float[] input;
+    private float[] output;
     [SerializeField] private float sightDistance = 5f;
+    [SerializeField] private float stoppingFloat = 1f;
 
     // Distance and angle to nearest target
     private GameObject[] targets;
@@ -40,9 +43,14 @@ public class Car : MonoBehaviour
     // Genetic Algorithm
     [HideInInspector] public bool isAlive = true;
 
+    [SerializeField] private float startHealth = 500f;
+    private float currentHealth;
+    [SerializeField] private float healthRegen = 50f;
+    [SerializeField] private float healthDrain = 10f;
+
     [SerializeField] public float baseFitness = 0.5f;
 
-    private bool crashed = false;
+    public bool crashed = false;
     [SerializeField] private float crashedPenalty = 0.1f;
 
     private void Awake()
@@ -61,6 +69,8 @@ public class Car : MonoBehaviour
         targets = GameObject.FindGameObjectsWithTag("Target");
 
         obstaclesLayer = LayerMask.GetMask("Obstacle");
+
+        currentHealth = startHealth;
     }
 
     private void FixedUpdate()
@@ -68,17 +78,23 @@ public class Car : MonoBehaviour
         if (isAlive)
         {
             checkSurroundings();
-            findTarget();
+            //findTarget();
             Move();
+
+            currentHealth = Mathf.Max(0f, currentHealth + (healthRegen * speedPercent - healthDrain) * Time.deltaTime);
+            if (currentHealth == 0f)
+            {
+                SetAlive(false);
+            }
         }
     }
 
     private void checkSurroundings()
     {
-        for (int i = 0; i < inputNodes - 3; i++)
+        for (int i = 0; i < inputNodes - extraInputNodes; i++)
         {
             //Color col;
-            float angle = ((i * 2 * Mathf.PI) / (inputNodes - 3)) + (car.eulerAngles.y * Mathf.PI / 180);
+            float angle = ((i * 2 * Mathf.PI) / (inputNodes - extraInputNodes)) + (car.eulerAngles.y * Mathf.PI / 180);
             Vector3 dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
             RaycastHit hit;
@@ -130,9 +146,9 @@ public class Car : MonoBehaviour
 
     private void Move()
     {
-        float[] output = nn.feedforward(input);
+        output = nn.feedforward(input);
 
-        if (output[2] > output[3]) SetAlive(false);
+        if (nn.sigmoid(output[2]) > stoppingFloat) SetAlive(false);
 
         float newSpeedPercent = output[0];
         float turning = output[1];
@@ -158,6 +174,7 @@ public class Car : MonoBehaviour
         SetAlive(true);
         crashed = false;
         skin.enabled = true;
+        currentHealth = isAlive ? startHealth : 0f;
 
         // Move to spawn position
         car.position = startPosition;

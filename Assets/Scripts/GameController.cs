@@ -32,7 +32,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        numAliveText.text = "No Alive: " + population.numAlive();
+        numAliveText.text = $"No Alive: {population.numAlive()}" +
+            $"\nNo Crashed: {population.numCrashed()}";
         countText.text = "Count: " + count;
     }
 

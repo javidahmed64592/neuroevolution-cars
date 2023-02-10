@@ -67,6 +67,17 @@ public class PopulationController : MonoBehaviour
         return num;
     }
 
+    public int numCrashed()
+    {
+        int num = 0;
+        foreach (Car Car in population)
+        {
+            num += System.Convert.ToInt32(Car.crashed);
+        }
+
+        return num;
+    }
+
     public void Evaluate()
     {
         for (int i = 0; i < populationSize; i++)
