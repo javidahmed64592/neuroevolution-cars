@@ -38,7 +38,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        numAliveText.text = "No Alive: " + population.numAlive();
+        numAliveText.text = "Active cars: " + population.numAlive()
+            + "\nReached end: " + population.numAtEnd();
         countText.text = "Count: " + count;
     }
 
