@@ -15,11 +15,11 @@ public class PopulationController : MonoBehaviour
 
     [SerializeField] private int populationSize;
     [SerializeField] private float mutationRate;
-    [SerializeField] private float parentSelectThreshold = 0.8f;
 
     private List<Car> population = new List<Car>();
 
-    private float maxFitness = 0;
+    private float maxAliveFitness = 0;
+    private float _maxFitness = 0f;
 
     public void Start()
     {
@@ -39,7 +39,7 @@ public class PopulationController : MonoBehaviour
 
     public int bestAgent()
     {
-        maxFitness = 0;
+        maxAliveFitness = 0;
         int bestAgent = 0;
 
         for (int i = 0; i < population.Count; i++)
@@ -48,14 +48,26 @@ public class PopulationController : MonoBehaviour
             bool isAlive = population[i].isAlive;
             bool atEnd = population[i].atEnd;
 
-            if (fitness > maxFitness && isAlive)
+            if (fitness > maxAliveFitness && isAlive)
             {
-                maxFitness = fitness;
+                maxAliveFitness = fitness;
                 bestAgent = i;
             }
         }
 
         return bestAgent;
+    }
+
+    private float maxFitness()
+    {
+        float highest = 0f;
+
+        foreach (Car car in population)
+        {
+            highest = Mathf.Max(highest, car.fitness());
+        }
+
+        return highest;
     }
 
     public int numAlive()
@@ -71,6 +83,8 @@ public class PopulationController : MonoBehaviour
 
     public void Evaluate()
     {
+        _maxFitness = maxFitness();
+
         for (int i = 0; i < populationSize; i++)
         {
             int indexA = parentIndex();
@@ -86,14 +100,12 @@ public class PopulationController : MonoBehaviour
         {
             Car.nn.ApplyMatrices();
         }
-
-        maxFitness = 0;
     }
 
     private int parentIndex()
     {
-        int index = Random.Range(0, population.Count);
-        while (parentSelectThreshold > population[index].fitness() / maxFitness)
+        int index = Random.Range(0, populationSize);
+        while (Random.Range(0f, 1f) > population[index].fitness() / _maxFitness)
         {
             index = Random.Range(0, population.Count);
         }

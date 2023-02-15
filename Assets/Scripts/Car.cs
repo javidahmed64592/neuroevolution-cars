@@ -135,6 +135,7 @@ public class Car : MonoBehaviour
 
     public float fitness()
     {
-        return car.position.z > 0 ? Mathf.Pow(car.position.z * cumulativeSpeedPercent, 2) : 0f;
+        return car.position.z > 0 && cumulativeSpeedPercent > 0 ?
+            Mathf.Pow(car.position.z * cumulativeSpeedPercent, 2) : 0f;
     }
 }
