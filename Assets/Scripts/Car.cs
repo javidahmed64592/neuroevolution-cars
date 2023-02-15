@@ -125,6 +125,7 @@ public class Car : MonoBehaviour
         if (other.gameObject.CompareTag("Stop"))
         {
             atEnd = true;
+            isAlive = false;
             speedPercent = 0f;
         }
     }
