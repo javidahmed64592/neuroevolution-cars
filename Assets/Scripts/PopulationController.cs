@@ -8,7 +8,7 @@ public class PopulationController : MonoBehaviour
     [SerializeField] private Transform camTransform;
 
     [SerializeField] private Vector3 offset;
-    private float smoothStep = 80f;
+    private float smoothStep = 75f;
 
     // Population variables
     [SerializeField] private GameObject CarPrefab;
@@ -45,6 +45,7 @@ public class PopulationController : MonoBehaviour
         {
             float fitness = population[i].fitness();
             bool isAlive = population[i].isAlive;
+            bool atEnd = population[i].atEnd;
 
             if (fitness > maxFitness && isAlive)
             {
@@ -91,7 +92,7 @@ public class PopulationController : MonoBehaviour
     private int parentIndex()
     {
         int index = Random.Range(0, population.Count);
-        while (Random.Range(0f, 100f) > population[index].fitness() / maxFitness)
+        while (Random.Range(0f, 1f) > population[index].fitness() / maxFitness)
         {
             index = Random.Range(0, population.Count);
         }
@@ -104,11 +105,9 @@ public class PopulationController : MonoBehaviour
         // Target
         Transform target = population[bestAgent()].transform;
 
-        // Update position
+        // Update position and rotation
         Vector3 targetPosition = target.position + offset;
-        camTransform.position = Vector3.Lerp(camTransform.position, targetPosition, 1 / smoothStep);
-
-        // Update rotation
-        camTransform.rotation = Quaternion.Slerp(camTransform.rotation, Quaternion.LookRotation(target.position - camTransform.position), 1 / smoothStep);
+        camTransform.SetPositionAndRotation(Vector3.Lerp(camTransform.position, targetPosition, 1 / smoothStep),
+            Quaternion.Slerp(camTransform.rotation, Quaternion.LookRotation(target.position - camTransform.position), 1 / smoothStep));
     }
 }
