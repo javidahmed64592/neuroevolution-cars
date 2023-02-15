@@ -3288,7 +3288,7 @@ MonoBehaviour:
   offset: {x: -18, y: 14, z: -14}
   CarPrefab: {fileID: 4994942985884092864, guid: 40e484a52ba08654fb6f46504f93a94d, type: 3}
   populationSize: 200
-  mutationRate: 0.02
+  mutationRate: 0.01
 --- !u!4 &298911099
 Transform:
   m_ObjectHideFlags: 0
@@ -9734,8 +9734,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.08996994, y: -0.26450938, z: 0.024793157, w: 0.95985705}
-  m_LocalPosition: {x: 7.84, y: 4.42, z: -13.52}
+  m_LocalRotation: {x: 0.22937618, y: 0.35249326, z: -0.09218239, w: 0.9025727}
+  m_LocalPosition: {x: -14.53918, y: 13.821579, z: -1.593904}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
