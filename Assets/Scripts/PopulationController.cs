@@ -15,6 +15,7 @@ public class PopulationController : MonoBehaviour
 
     [SerializeField] private int populationSize;
     [SerializeField] private float mutationRate;
+    [SerializeField] private float parentSelectThreshold = 0.8f;
 
     private List<Car> population = new List<Car>();
 
@@ -92,7 +93,7 @@ public class PopulationController : MonoBehaviour
     private int parentIndex()
     {
         int index = Random.Range(0, population.Count);
-        while (Random.Range(0f, 1f) > population[index].fitness() / maxFitness)
+        while (parentSelectThreshold > population[index].fitness() / maxFitness)
         {
             index = Random.Range(0, population.Count);
         }
