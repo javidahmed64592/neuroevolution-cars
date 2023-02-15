@@ -89,7 +89,9 @@ public class Car : MonoBehaviour
         float newSpeedPercent = output[0];
         float turning = output[1];
 
-        speedPercent = Mathf.Sign(newSpeedPercent) * Mathf.Min(1f, Mathf.Abs(Mathf.SmoothStep(speedPercent, newSpeedPercent, Time.deltaTime / timeMaxSpeed)));
+        //speedPercent = Mathf.Sign(newSpeedPercent) * Mathf.Min(1f, Mathf.Abs(Mathf.SmoothStep(speedPercent, newSpeedPercent, Time.deltaTime / timeMaxSpeed)));
+        speedPercent = Mathf.SmoothStep(speedPercent, newSpeedPercent, Time.deltaTime / timeMaxSpeed);
+        speedPercent = speedPercent < 0 ? Mathf.Max(-0.2f, speedPercent) : Mathf.Min(1f, speedPercent);
 
         Vector3 newPos = Vector3.Lerp(car.position, car.position + (car.forward * maxSpeed * speedPercent), posSmoothStep);
         Quaternion newRot = car.rotation * Quaternion.AngleAxis(turning * turningSpeed * Time.deltaTime, Vector3.up);
