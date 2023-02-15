@@ -81,6 +81,17 @@ public class PopulationController : MonoBehaviour
         return num;
     }
 
+    public int numAtEnd()
+    {
+        int num = 0;
+        foreach (Car Car in population)
+        {
+            num += System.Convert.ToInt32(Car.atEnd);
+        }
+
+        return num;
+    }
+
     public void Evaluate()
     {
         _maxFitness = maxFitness();
