@@ -32,6 +32,7 @@ public class Car : MonoBehaviour
     [HideInInspector] public bool isAlive = true;
 
     [HideInInspector] public bool atEnd = false;
+    private float cumulativeSpeedPercent = 1f;
 
     private void Awake()
     {
@@ -97,6 +98,7 @@ public class Car : MonoBehaviour
         Quaternion newRot = car.rotation * Quaternion.AngleAxis(turning * turningSpeed * Time.deltaTime, Vector3.up);
         car.SetPositionAndRotation(newPos, newRot);
 
+        cumulativeSpeedPercent += speedPercent;
         speedPercent = Mathf.SmoothStep(speedPercent, 0f, Time.deltaTime / timeSlowDown);
     }
 
@@ -112,6 +114,7 @@ public class Car : MonoBehaviour
     {
         // Set attributes
         SetAlive(true);
+        cumulativeSpeedPercent = 1f;
 
         // Move to spawn position
         car.position = startPosition;
@@ -132,6 +135,6 @@ public class Car : MonoBehaviour
 
     public float fitness()
     {
-        return car.position.z > 0 ? Mathf.Pow(car.position.z, 2) : 0f;
+        return car.position.z > 0 ? Mathf.Pow(car.position.z * cumulativeSpeedPercent, 2) : 0f;
     }
 }
