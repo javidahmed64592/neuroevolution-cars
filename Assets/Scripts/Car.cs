@@ -107,7 +107,6 @@ public class Car : MonoBehaviour
         isAlive = alive;
         skin.enabled = alive;
         speedPercent = 0f;
-        atEnd = !alive;
     }
 
     public void ResetPosition(Vector3 startPosition)
@@ -115,6 +114,7 @@ public class Car : MonoBehaviour
         // Set attributes
         SetAlive(true);
         cumulativeSpeedPercent = 1f;
+        atEnd = false;
 
         // Move to spawn position
         car.position = startPosition;
