@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
     // UI
     [SerializeField] private Text generationText;
 
-    [SerializeField] private Text countText;
     [SerializeField] private Text numAliveText;
 
     private void Awake()
@@ -40,7 +39,6 @@ public class GameController : MonoBehaviour
     {
         numAliveText.text = "Active cars: " + population.numAlive()
             + "\nReached end: " + population.numAtEnd();
-        countText.text = "Count: " + count;
     }
 
     private IEnumerator Running()
